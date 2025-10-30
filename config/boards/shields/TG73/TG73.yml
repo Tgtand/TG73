@@ -1,0 +1,11 @@
+file_format: "1"
+id: TG73
+name: TG73
+type: shield
+url: 
+requires: [nrfmicro_13_52840]
+exposes: [i2c_oled]
+features:
+  - keys
+  - display
+  - underglow
