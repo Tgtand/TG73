@@ -1,11 +1,15 @@
 file_format: "1"
-id: TG73
+id: tg73
 name: TG73
 type: shield
 url: 
-requires: [nrfmicro_13_52840]
-exposes: [i2c_oled]
+requires:
+  - zmk,kscan-gpio-matrix
+  - zmk,matrix-transform
+supported_boards:
+  - nrfmicro_13
+  - nrfmicro_13_flipped
 features:
   - keys
-  - display
   - underglow
+  - display
