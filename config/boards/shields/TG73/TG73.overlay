@@ -120,7 +120,7 @@
             , <&gpio0 24  (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
             , <&gpio0 13  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio1 6 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
-            , <&gpio1 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio0 3 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
             , <&gpio1 2  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
@@ -228,5 +228,41 @@
         zephyr,console = &cdc_acm_uart0;
         zephyr,shell-uart = &cdc_acm_uart0;
         zephyr,uart-mcumgr = &cdc_acm_uart0;
+    };
+};
+
+
+/ {
+    model = "nrfmicro";
+    compatible = "joric,nrfmicro";
+
+    chosen {
+        zephyr,code-partition = &code_partition;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zephyr,console = &cdc_acm_uart;
+        zmk,battery = &vbatt;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        blue_led: led_0 {
+            gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+            label = "Blue LED";
+        };
+    };
+
+    ext-power {
+        compatible = "zmk,ext-power-generic";
+        label = "EXT_POWER";
+        control-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
+    };
+
+    vbatt: vbatt {
+        compatible = "zmk,battery-voltage-divider";
+        label = "BATTERY";
+        io-channels = <&adc 2>;
+        output-ohms = <2000000>;
+        full-ohms = <(2000000 + 820000)>;
     };
 };
