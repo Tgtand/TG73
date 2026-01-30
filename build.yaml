@@ -18,7 +18,7 @@
 #
 ---
 include:
-   - board: nrfmicro_13
+   - board: nrfmicro
    #- board: nrfmicro_13
      shield: TG73
      snippet: studio-rpc-usb-uart
