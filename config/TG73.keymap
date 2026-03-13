@@ -42,11 +42,11 @@
             // ------------------------------------------------------------------------------------------------------
 
             bindings = <
-&kp ESC    &kp F1           &kp F2           &kp F3           &kp F4           &kp F5           &kp F6      &kp F7          &kp F8           &kp F9           &kp F10   &kp F11    &kp F12              &bt BT_CLR  &bootloader
-&kp TAB    &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &kp R            &kp T            &kp Y       &rgb_ug RGB_ON  &rgb_ug RGB_OFF  &rgb_ug RGB_TOG  &kp P     &kp LBKT   &kp RBKT  &kp NUBS   &kp KP_NUM  &kp C_VOL_UP
-&kp CLCK   &rgb_ug RGB_BRI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_EFF  &kp G            &kp H       &kp J           &kp K            &kp L            &kp SEMI             &kp SQT   &kp KP_N4  &kp KP_N5   &kp C_VOL_DN
-&kp LSHFT                   &rgb_ug RGB_BRD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_EFR  &kp B       &kp N           &kp M            &kp COMMA        &kp DOT   &kp SLASH  &kp UP    &kp KP_N1  &kp KP_N2   &kp KP_N3
-&kp LCTRL  &kp LWIN         &kp LALT                          &out OUT_TOG                      &kp RSHIFT                                   &trans           &mo 2     &kp LEFT   &kp DOWN  &kp RIGHT  &kp KP_N0   &kp DEL
+&kp ESC    &kp F1           &kp F2           &kp F3           &kp F4           &kp F5           &kp F6      &kp F7          &kp F8           &kp F9           &kp F10   &kp F11    &kp F12                         &bt BT_CLR  &bootloader
+&kp TAB    &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &kp R            &kp T            &kp Y       &rgb_ug RGB_ON  &rgb_ug RGB_OFF  &rgb_ug RGB_TOG  &kp P     &kp LBKT   &kp RBKT  &kp NON_US_BACKSLASH  &kp KP_NUM  &kp C_VOL_UP
+&kp CLCK   &rgb_ug RGB_BRI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_EFF  &kp G            &kp H       &kp J           &kp K            &kp L            &kp SEMI             &kp SQT   &kp KP_N4             &kp KP_N5   &kp C_VOL_DN
+&kp LSHFT                   &rgb_ug RGB_BRD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_EFR  &kp B       &kp N           &kp M            &kp COMMA        &kp DOT   &kp SLASH  &kp UP    &kp KP_N1             &kp KP_N2   &kp KP_N3
+&kp LCTRL  &kp LWIN         &kp LALT                          &out OUT_TOG                      &kp RSHIFT                                   &trans           &mo 2     &kp LEFT   &kp DOWN  &kp RIGHT             &kp KP_N0   &kp DEL
             >;
         };
 
