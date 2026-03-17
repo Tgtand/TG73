@@ -90,7 +90,7 @@
             ;
     };
 
-      position_map {
+    position_map {
         compatible = "zmk,physical-layout-position-map";
 
         layout {
@@ -99,15 +99,26 @@
         };
     };
 
+
     chosen {
+
         zmk,kscan = &kscan0;
         zmk,matrix_transform = &default_transform;
-        // zmk,underglow = &led_strip;
-        zephyr,bt-c2h-uart = &uart0; 
-        zephyr,console = &uart0;  // 添加这行
-        zephyr,shell-uart = &uart0;  // 添加这行
-    };
+        zmk,underglow = &led_strip;
 
+        zephyr,bt-c2h-uart = &uart0;
+        
+
+        zephyr,console = &cdc_acm_uart;
+        zephyr,shell-uart = &cdc_acm_uart;
+        zephyr,uart-mcumgr = &cdc_acm_uart;
+        
+
+        zephyr,code-partition = &code_partition;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zmk,battery = &vbatt;
+    };
 
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
@@ -117,20 +128,20 @@
         col-gpios
             = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 24  (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
-            , <&gpio0 13  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio1 6 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
+            , <&gpio0 24 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 3 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
+            , <&gpio1 4  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 3  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio1 2  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 28 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
-            , <&gpio1 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 0  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 22 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
+            , <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio0 2  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 20 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
-            , <&gpio0 31 (GPIO_ACTIVE_HIGH  | GPIO_PULL_DOWN)>
+            , <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
         row-gpios
             = <&gpio0 17 GPIO_ACTIVE_HIGH>
@@ -153,15 +164,38 @@
             RC(4,0) RC(4,1) RC(4,2)         RC(4,4)         RC(4,6)                 RC(4,9) RC(4,10) RC(4,11) RC(4,12) RC(4,13) RC(4,14) RC(4,15)       
         >;
     };
-};
 
+    leds {
+        compatible = "gpio-leds";
+        blue_led: led_0 {
+            gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+            label = "Blue LED";
+        };
+    };
+
+    ext-power {
+        compatible = "zmk,ext-power-generic";
+        label = "EXT_POWER";
+        control-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
+    };
+
+    vbatt: vbatt {
+        compatible = "zmk,battery-voltage-divider";
+        label = "BATTERY";
+        io-channels = <&adc 2>;
+        output-ohms = <2000000>;
+        full-ohms = <(2000000 + 820000)>;
+    };
+};
 
 &zephyr_udc0 {
-    compatible = "nordic,nrf-usbd"; 
-    status = "okay"; 
+    compatible = "nordic,nrf-usbd";
+    status = "okay";
+    
+    cdc_acm_uart: cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
 };
-
-
 
 &pinctrl {
     spi3_default: spi3_default {
@@ -191,11 +225,11 @@
         label = "WS2812";
 
         /* SPI */
-        reg = <0>; /* ignored, but necessary for SPI bindings */
+        reg = <0>;
         spi-max-frequency = <4000000>;
 
         /* WS2812 */
-        chain-length = <73>; /* arbitrary; change at will */
+        chain-length = <73>; 
         spi-one-frame = <0x70>;
         spi-zero-frame = <0x40>;
 
@@ -206,79 +240,4 @@
         >;
     };
 };
-/ {
-    chosen {
-        zmk,underglow = &led_strip;
-    };
-};
-
-// 在文件末尾添加以下内容
-&zephyr_udc0 {
-    compatible = "nordic,nrf-usbd";
-    status = "okay";
-    
-    cdc_acm_uart0: cdc_acm_uart0 {
-        compatible = "zephyr,cdc-acm-uart";
-    };
-};
-
-/ {
-    chosen {
-        // 添加这些 CDC ACM 配置
-        zephyr,console = &cdc_acm_uart0;
-        zephyr,shell-uart = &cdc_acm_uart0;
-        zephyr,uart-mcumgr = &cdc_acm_uart0;
-    };
-};
-
-
-/ {
-    chosen {
-        zephyr,console = &cdc_acm_uart;
-        zephyr,shell-uart = &cdc_acm_uart;
-        zephyr,uart-mcumgr = &cdc_acm_uart;
-    };
-};
-
-&zephyr_udc0 {
-    cdc_acm_uart: cdc_acm_uart {
-        compatible = "zephyr,cdc-acm-uart";
-    };
-};
-
-/ {
-    model = "nrfmicro";
-    compatible = "joric,nrfmicro";
-
-    chosen {
-        zephyr,code-partition = &code_partition;
-        zephyr,sram = &sram0;
-        zephyr,flash = &flash0;
-        zephyr,console = &cdc_acm_uart;
-        zmk,battery = &vbatt;
-    };
-
-    leds {
-        compatible = "gpio-leds";
-        blue_led: led_0 {
-            gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
-            label = "Blue LED";
-        };
-    };
-
-    ext-power {
-        compatible = "zmk,ext-power-generic";
-        label = "EXT_POWER";
-        control-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
-    };
-
-    vbatt: vbatt {
-        compatible = "zmk,battery-voltage-divider";
-        label = "BATTERY";
-        io-channels = <&adc 2>;
-        output-ohms = <2000000>;
-        full-ohms = <(2000000 + 820000)>;
-    };
-};
-
-
+EOF
