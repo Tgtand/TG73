@@ -102,10 +102,16 @@
     chosen {
         zmk,kscan = &kscan0;
         zmk,matrix_transform = &default_transform;
-        // zmk,underglow = &led_strip;
         zephyr,bt-c2h-uart = &uart0; 
-        zephyr,console = &uart0;  // 添加这行
-        zephyr,shell-uart = &uart0;  // 添加这行
+        zephyr,console = &uart0;  
+        zephyr,shell-uart = &uart0;  
+        zmk,underglow = &led_strip;
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+        zephyr,uart-mcumgr = &cdc_acm_uart0;
+        zephyr,console = &cdc_acm_uart;
+        zephyr,shell-uart = &cdc_acm_uart;
+        zephyr,uart-mcumgr = &cdc_acm_uart;
     };
 
 
@@ -206,11 +212,6 @@
         >;
     };
 };
-/ {
-    chosen {
-        zmk,underglow = &led_strip;
-    };
-};
 
 // 在文件末尾添加以下内容
 &zephyr_udc0 {
@@ -222,23 +223,6 @@
     };
 };
 
-/ {
-    chosen {
-        // 添加这些 CDC ACM 配置
-        zephyr,console = &cdc_acm_uart0;
-        zephyr,shell-uart = &cdc_acm_uart0;
-        zephyr,uart-mcumgr = &cdc_acm_uart0;
-    };
-};
-
-
-/ {
-    chosen {
-        zephyr,console = &cdc_acm_uart;
-        zephyr,shell-uart = &cdc_acm_uart;
-        zephyr,uart-mcumgr = &cdc_acm_uart;
-    };
-};
 
 &zephyr_udc0 {
     cdc_acm_uart: cdc_acm_uart {
