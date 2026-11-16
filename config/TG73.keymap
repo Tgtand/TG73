@@ -57,7 +57,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans  &trans
 &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans          &trans          &trans                  &trans  &trans  &trans  &trans  &trans  &trans  &kp ASTERISK
+&trans  &trans  &trans          &trans          &trans                  &trans  &trans  &trans  &trans  &trans  &trans  &none
             >;
         };
     };
